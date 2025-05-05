@@ -41,7 +41,7 @@
       }
 
       .leaflet-marker-icon:hover {
-        transform: scale(1.2); /* Grow the icon on hover */
+        transform: scale(1.2); /* we changed this multiple times to change the icon on hover */
       }
 
       #sidebar {
@@ -62,25 +62,26 @@
         padding: 10px;
       }
 
-.legend {
-    position: absolute;
-    left: 10px;
-    background: #fffaf3;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    color: black; /* Ensures text is black */
-    border: 1px solid #ccc;
-    max-height: 200px; /* Limit height */
-    overflow-y: auto; /* Enable scrolling if content exceeds height */
-}
+      .legend {
+        position: absolute;
+        left: 10px;
+        background: #fffaf3;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        color: black; 
+        border: 1px solid #ccc;
+        max-height: 200px; 
+        overflow-y: auto; /* Enable scrolling if content exceeds the height that we write down*/
+      }
 
-#legendContainer {
-    bottom: 20px; /* Adjust to prevent overlap with main legend */
-    height: 150px; /* Set a fixed height */
-    width: 200px; /* Set a fixed width */
-}
+      /* we can adjust this to prevent overlap with main legend */
+      #legendContainer {
+        bottom: 20px; 
+        height: 150px; 
+        width: 200px; 
+      }
 
 
       .legend span {
@@ -98,12 +99,13 @@
       }
 
       .leaflet-marker-icon {
-        transition: transform 0.5s ease; /* Smooth transition for scaling */
+        transition: transform 0.5s ease; /* keeping a smooth transition for scaling but there are still some issues?? */
       }
 
       .leaflet-marker-icon:hover {
         transform: scale(1.2); /* Grow the icon on hover */
       }
+      
     </style>
   </head>
   <body>
@@ -216,7 +218,7 @@
         popupAnchor: [0, -15],
       });
 
-      // Define all checkpoints
+      // Define all checkpoints for the first layer -- these coordinates are for all ports involved in the transatlantic slave trade
       const checkpoints = [
         { name: "Virginia", coords: [36.809285, -76.047363] },
         { name: "Boston", coords: [42.358544, -71.037598] },
@@ -476,7 +478,7 @@
     },
 ];
 
-      // Define all Triangular Trade routes
+      // Define all Triangular Trade routes -- We liked that we had a description for each of the trade routes so it would go more in depth
       const triangularTradeRoutes = [
         // EUROPE TO AFRICA (WHITE)
         {
@@ -633,14 +635,14 @@
         },
       ];
 
-      // Color scheme for the Triangular Trade routes
+      // Color scheme for the Triangular Trade routes - did this for Pan African Flag
       const routeColors = {
         "Europe-Africa": "#b30900", // Red
         "Africa-Americas": "#095700", // Green
         "Americas-Europe": "#000000", // Black
       };
 
-  // Layer groups for organization
+  // Layer groups for organisation
       const originalLayer = L.layerGroup();
       const coffeeIndustryLayer = L.layerGroup();
       const mergedLayer = L.layerGroup();
@@ -660,7 +662,7 @@
             .addTo(originalLayer)
             .bindPopup(`<b>${route.name}</b><br>${route.description}`);
 
-          // Add to merged layer with UNIFORM white dotted styling
+          // Add to merged layer with UNIFORM white dotted styling -- we wanted these lines to be differentiated from the first map as we appreciate the user is now aware of what they represent
           L.polyline(curveSegment, {
             color: "#b0b0b0", // All lines are grey
             weight: 4, // Consistent thickness
@@ -831,7 +833,7 @@
           .addTo(mergedLayer)
           .bindPopup(`<b>${country.name}</b><br>${country.info}`);
 
-        // Add hover effect for consumer markers
+        // Add hover effect for consumer markers - there is a bit of a glitch when zooming in??
         consumerMarker.on("mouseover", function () {
           this.setIcon(
             L.icon({
@@ -880,7 +882,8 @@
         )
         .addTo(map);
 
-      // LEGEND CONTROL LOGIC
+      // LEGEND CONTROL LOGIC -- we created the layering key boxes with this function, allowing it to change with each switch of the toggle
+      //lucia note -- we had some issues due to the overlapping boxes and some would still show. For Example the slave trade routes key showed up on the second and third -- but with trial and error we figured it out
       
       const legends = {
         "Transatlantic Slave Trade Routes": `
